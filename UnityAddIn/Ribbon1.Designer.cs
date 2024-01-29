@@ -1,4 +1,11 @@
-﻿namespace UnityAddIn
+﻿using Microsoft.Office.Tools.Ribbon;
+using System;
+using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
+using System.Windows.Forms;
+
+namespace UnityAddIn
 {
     partial class Ribbon1 : Microsoft.Office.Tools.Ribbon.RibbonBase
     {
@@ -125,6 +132,53 @@
             this.ResumeLayout(false);
 
         }
+
+
+        private void search_Click(object sender, RibbonControlEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async void close_Click(object sender, RibbonControlEventArgs e)
+        {
+            var requestData = new
+            {
+                TicketStatus = "Close Completed"
+            };
+
+            string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(requestData);
+
+            string postApiUrl = "";
+            string bearerToken = "";
+
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsync(postApiUrl, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("POST request sent successfully.");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Error sending POST request: {response.StatusCode}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Exception occurred: {ex.Message}");
+                }
+            }
+        }
+
 
         #endregion
 

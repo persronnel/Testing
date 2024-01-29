@@ -173,11 +173,20 @@
     <Compile Include="create.Designer.cs">
       <DependentUpon>create.cs</DependentUpon>
     </Compile>
+    <Compile Include="Edt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Edt.Designer.cs">
+      <DependentUpon>Edt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <EmbeddedResource Include="create.resx">
       <DependentUpon>create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Edt.resx">
+      <DependentUpon>Edt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -188,6 +197,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Resolve.resx">
+      <DependentUpon>Resolve.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Ribbon1.resx">
       <DependentUpon>Ribbon1.cs</DependentUpon>
     </EmbeddedResource>
@@ -199,6 +211,12 @@
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Resolve.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Resolve.Designer.cs">
+      <DependentUpon>Resolve.cs</DependentUpon>
     </Compile>
     <Compile Include="Ribbon1.cs">
       <SubType>Component</SubType>

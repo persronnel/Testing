@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Outlook;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,9 +15,13 @@ namespace UnityAddIn
 {
     public partial class CreateForm : Form
     {
+        private Microsoft.Office.Interop.Outlook.MailItem lastInspectedMailItem;
+        private MailItem mailItem;
+
         public CreateForm(string from, string to, string description, string longDescription)
         {
             InitializeComponent();
+            this.lastInspectedMailItem = mailItem;
 
             RFTB2.Text = from;
             ATTB2.Text = to;
@@ -62,7 +67,6 @@ namespace UnityAddIn
             string sdesc = DescTB.Text;
             string reqFor = RFTB2.Text;
 
-
             var requestData = new
             {
                 Location = location,
@@ -74,14 +78,9 @@ namespace UnityAddIn
 
             string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(requestData);
 
-            string postApiUrl = "";
-            string bearerToken = "";
+            string postApiUrl = "";  
+            string bearerToken = ""; 
 
-            await SendRequest(postApiUrl, HttpMethod.Post, jsonData, bearerToken);
-        }
-
-        private async Task SendRequest(string apiUrl, HttpMethod method, string jsonData, string bearerToken)
-        {
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
@@ -89,17 +88,43 @@ namespace UnityAddIn
 
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+                HttpResponseMessage response = await client.PostAsync(postApiUrl, content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show($"POST request sent successfully");
+                    string jsonResponse = await response.Content.ReadAsStringAsync();
+                    dynamic responseData = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonResponse);
+                    string caseNumber = responseData?.CaseNumber;
+                    if (!string.IsNullOrEmpty(caseNumber))
+                    {
+                        string newSubject = $"Case - {caseNumber}";
+                        UpdateSubject(newSubject);
+                        MessageBox.Show($"POST request sent successfully. Subject updated to: {newSubject}");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error: Case number not found in the JSON response.");
+                    }
                 }
                 else
                 {
                     MessageBox.Show($"Error sending POST request: {response.StatusCode}");
                 }
             }
+        }
+
+        private void UpdateSubject(string newSubject)
+        {
+            if (lastInspectedMailItem != null)
+            {
+                lastInspectedMailItem.Subject = newSubject;
+                lastInspectedMailItem.Save();
+            }
+        }
+
+        private void CTTB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -39,7 +39,6 @@
             this.ATTB2 = new System.Windows.Forms.TextBox();
             this.RFTB2 = new System.Windows.Forms.TextBox();
             this.Subm = new System.Windows.Forms.Button();
-            this.Cancel = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.CTTB = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
@@ -99,7 +98,7 @@
             // 
             // DescTB
             // 
-            this.DescTB.Location = new System.Drawing.Point(163, 126);
+            this.DescTB.Location = new System.Drawing.Point(159, 34);
             this.DescTB.Multiline = true;
             this.DescTB.Name = "DescTB";
             this.DescTB.ReadOnly = true;
@@ -109,9 +108,10 @@
             // 
             // LDTB
             // 
-            this.LDTB.Location = new System.Drawing.Point(333, 402);
+            this.LDTB.Location = new System.Drawing.Point(159, 98);
+            this.LDTB.Multiline = true;
             this.LDTB.Name = "LDTB";
-            this.LDTB.Size = new System.Drawing.Size(100, 20);
+            this.LDTB.Size = new System.Drawing.Size(491, 76);
             this.LDTB.TabIndex = 9;
             // 
             // ATTB2
@@ -130,22 +130,13 @@
             // 
             // Subm
             // 
-            this.Subm.Location = new System.Drawing.Point(253, 351);
+            this.Subm.Location = new System.Drawing.Point(358, 355);
             this.Subm.Name = "Subm";
             this.Subm.Size = new System.Drawing.Size(75, 23);
             this.Subm.TabIndex = 12;
             this.Subm.Text = "Submit";
             this.Subm.UseVisualStyleBackColor = true;
             this.Subm.Click += new System.EventHandler(this.Subm_Click);
-            // 
-            // Cancel
-            // 
-            this.Cancel.Location = new System.Drawing.Point(451, 351);
-            this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(75, 23);
-            this.Cancel.TabIndex = 13;
-            this.Cancel.Text = "Cancel";
-            this.Cancel.UseVisualStyleBackColor = true;
             // 
             // textBox1
             // 
@@ -163,6 +154,7 @@
             this.CTTB.Name = "CTTB";
             this.CTTB.Size = new System.Drawing.Size(172, 21);
             this.CTTB.TabIndex = 14;
+            this.CTTB.SelectedIndexChanged += new System.EventHandler(this.CTTB_SelectedIndexChanged);
             // 
             // CreateForm
             // 
@@ -171,7 +163,6 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.CTTB);
-            this.Controls.Add(this.Cancel);
             this.Controls.Add(this.Subm);
             this.Controls.Add(this.RFTB2);
             this.Controls.Add(this.ATTB2);
@@ -203,7 +194,6 @@
         private System.Windows.Forms.TextBox ATTB2;
         private System.Windows.Forms.TextBox RFTB2;
         private System.Windows.Forms.Button Subm;
-        private System.Windows.Forms.Button Cancel;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ComboBox CTTB;
     }
